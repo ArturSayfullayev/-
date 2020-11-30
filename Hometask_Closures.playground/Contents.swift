@@ -12,7 +12,7 @@ import Foundation
 // =======================================
 
 /*
-
+ 
  1. Написать функцию, которая ничего не возвращает и принимает только одно замыкание `closure`
  2. Это замыкание `closure` тоже ничего не принимает и ничего не возвращает
  3. Ваша функция должна посчитать от `1` до `10` в цикле и только после этого вызвать замыкание `closure`
@@ -23,9 +23,13 @@ import Foundation
 // MARK: - Task 1. Solution
 // =======================================
 
-// ...
-
-
+func countNumber(_ closure: ()) {
+    for i in 1...10 {
+        print(i)
+    }
+    print(closure)
+}
+countNumber(())
 
 
 
@@ -37,20 +41,83 @@ import Foundation
  1. Объявите 3 массива с типами [Int], [Double], [String] и заполните их данными
  2. Используя метод массивов `sorted`, отсортируйте массивы  по возрастанию и убыванию
  3. Для каждого массива покажите использование замыкания `sorted` по этапам (аналогично, как делали в классе):
-        - В развернутом виде
-        - В неявном виде
-        - С использование сокращенных имен параметров
-        - В сокращенной форме
+ - В развернутом виде
+ - В неявном виде
+ - С использование сокращенных имен параметров
+ - В сокращенной форме
  */
 
 
 // MARK: - Task 2. Solution
 // =======================================
 
-// ...
+let arrayOfInt: [Int] = [1, 2, 3, 4, 5]
+let arrayOfDouble: [Double] = [1.1, 2.2, 3.3, 4.4, 5.5]
+let arrayOfString: [String] = ["One", "two", "three", "four", "five"]
 
+// MARK: - Сортировка по возрастанию\ убыванию в развернутом виде:
+// Массив Int
+print(arrayOfInt.sorted(by: { (first: Int, second: Int) -> Bool in
+    return first < second
+}))
+print(arrayOfInt.sorted(by: { (first: Int, second: Int) -> Bool in
+    return first > second
+}))
 
+// Массив Double
+print(arrayOfDouble.sorted(by: { (first: Double, second: Double) -> Bool in
+    return first < second
+}))
+print(arrayOfDouble.sorted(by: { (first: Double, second: Double) -> Bool in
+    return first > second
+}))
 
+// Массив String
+print(arrayOfString.sorted(by: { (first: String, second: String) -> Bool in
+    return first < second
+}))
+print(arrayOfString.sorted(by: { (first: String, second: String) -> Bool in
+    return first > second
+}))
+
+// MARK: - Сортировка по возрастанию\ убыванию в неявном виде:
+// Массив Int
+print(arrayOfInt.sorted(by: { first, second in first < second }))
+print(arrayOfInt.sorted(by: { first, second in first > second }))
+
+// Массив Double
+print(arrayOfDouble.sorted(by: { first, second in first < second }))
+print(arrayOfDouble.sorted(by: { first, second in first > second }))
+
+// Массив String
+print(arrayOfString.sorted(by: { first, second in first < second }))
+print(arrayOfString.sorted(by: { first, second in first > second }))
+
+// MARK: - Сортировка по возрастанию\ убыванию с использование сокращенных имен параметров:
+// Массив Int
+print(arrayOfInt.sorted(by: { $0 > $1 }))
+print(arrayOfInt.sorted(by: { $0 < $1 }))
+
+// Массив Double
+print(arrayOfDouble.sorted(by: { $0 > $1 }))
+print(arrayOfDouble.sorted(by: { $0 < $1 }))
+
+// Массив String
+print(arrayOfString.sorted(by: { $0 > $1 }))
+print(arrayOfString.sorted(by: { $0 < $1 }))
+
+// MARK: - Сортировка по возрастанию\ убыванию в сокращенной форме:
+// Массив Int
+print(arrayOfInt.sorted(by: >))
+print(arrayOfInt.sorted(by: <))
+
+// Массив Double
+print(arrayOfDouble.sorted(by: >))
+print(arrayOfDouble.sorted(by: <))
+
+// Массив String
+print(arrayOfString.sorted(by: >))
+print(arrayOfString.sorted(by: <))
 
 
 
@@ -70,23 +137,41 @@ import Foundation
 // MARK: - Task 3. Solution
 // =======================================
 
-// ...
+func maxMinElement(_ array: [Int], _ closure:(Int, Int?) -> Bool) -> Int {
+    var optionalInt: Int?
+    for num in array {
+        if closure(num, optionalInt) {
+            optionalInt = num
+        }
+    }
+    var first: Int = 0
+    if let i: Int = array.first {
+        first = i
+    }
+    return optionalInt ?? first
+}
 
+// Поиск максимального элемента массива
+print(maxMinElement(arrayOfInt) { (first: Int, second:Int?) -> Bool in
+    first > second ?? 0
+})
 
-
-
+// Поиск минимального элемента массива
+print(maxMinElement(arrayOfInt) { (first: Int, second:Int?) -> Bool in
+    first < second ?? 0
+})
 
 
 // =======================================
 // MARK: - Task 4
 // =======================================
 /*
- 1. Используя строку, проинициализированную ниже, рреобразуйте ее в массив символов
+ 1. Используя строку, проинициализированную ниже, преобразуйте ее в массив символов
  2. Используя метод sorted отсортируйте этот массив символов так, чтобы:
-        - вначале шли гласные в алфавитном порядке,
-        - потом согласные в алфавитном порядке,
-        - потом цифры по порядку,
-        - а только потом символы */
+ - вначале шли гласные в алфавитном порядке,
+ - потом согласные в алфавитном порядке,
+ - потом цифры по порядку,
+ - а только потом символы */
 
 
 // MARK: - Task 4. Solution
@@ -107,31 +192,78 @@ Swift 5.1 was officially released in September 2019. Swift 5.1 builds on the pre
 """
 
 
-// ...
+var arrayOfCharacter: [Character] = vereVeryLongText.lowercased().map { Character(extendedGraphemeClusterLiteral: $0) }
 
 
-
-
-
+func sortArray(_ array: [Character]) -> [Character]{
+    var arrayOfVowels: [Character] = []
+    var arrayOfСonsonants: [Character] = []
+    var arrayOfNums: [Character] = []
+    var arrayOfSymbols: [Character] = []
+    
+    for i in array {
+        switch i {
+        case "a", "e", "i", "o", "u":
+            arrayOfVowels.append(i)
+        case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z":
+            arrayOfСonsonants.append(i)
+        case "0", "1", "2", "3", "4", "5", "6", "7", "8", "9":
+            arrayOfNums.append(i)
+        case " ":
+            continue
+        default:
+            arrayOfSymbols.append(i)
+        }
+    }
+    let sortedArray: [Character] = arrayOfVowels.sorted(by: <) + arrayOfСonsonants.sorted(by: <) + arrayOfNums.sorted(by: <) + arrayOfSymbols
+    return sortedArray
+}
+sortArray(arrayOfCharacter)
 
 // =======================================
 // MARK: - Task 5*
 // =======================================
 /*
-
+ 
  1. У Вас имеется массив с именами друзей `names`(проинициализирован ниже)
  2. Реализуйте метод, который отсортирует данный массив по возрастанию количества букв в именах.
  3. !!! Для этого пункта, Вам понадобится провести исследование в документации !!!
-    С помощью замыкания преобразуйте массив `names` в словарь, в котором:
-        - `key` - это количество символов в имени
-        - `value` - это значение, которое получено из имени друга, где все символы отсортированы по убыванию
-        (DACB -> DCBA)
+ С помощью замыкания преобразуйте массив `names` в словарь, в котором:
+ - `key` - это количество символов в имени
+ - `value` - это значение, которое получено из имени друга, где все символы отсортированы по убыванию
+ (DACB -> DCBA)
  */
 
 
 // MARK: - Task 5*. Solution
 // =======================================
 
-let names: [String] = ["Arnold", "Kirill", "Julia", "Stacy", "Robin", "Jackie", "Emma", "Duncan", "Barbara"]
+let names: [String] = ["Arnold Schwarzenegger",
+                       "Sean Connery",
+                       "Julia Roberts",
+                       "Albert Einstein",
+                       "Sylvester Stallone",
+                       "Jackie Chan",
+                       "Emma Stone",
+                       "Duncan MacLeod",
+                       "Barbra Streisand"]
 
-// ...
+let sortedNames = names.sorted { $0.count < $1.count }
+
+
+// MARK: - Создание словаря через map:
+var dictOfNames: [Int: String] = [:]
+
+names.map {
+    dictOfNames.updateValue(String($0.sorted(by: >))
+                                .trimmingCharacters(in: .whitespaces)
+                                .lowercased(),
+                            forKey: $0.count)
+}
+print(dictOfNames.sorted { $0.key < $1.key })               // Вывод словаря, отсортированного по ключу(для удобства)
+
+
+
+
+
+
